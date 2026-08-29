@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<!--
+  My Expense Tracker
+  Copyright © 2026 Mwangazi Tech Solutions. All rights reserved.
+  This software is proprietary and licensed under the terms in LICENSE.
+  Contact: mwangazitechsolutions@gmail.com
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Expense Tracker</title>
+  <meta name="description" content="A simple, personal expense tracker in Zambian Kwacha. Works offline, saves to your browser." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <!-- Header -->
+    <header class="topbar">
+      <div class="brand">
+        <span class="logo">K</span>
+        <div>
+          <h1>My Expense Tracker</h1>
+          <p class="sub">Zambian Kwacha (K) · Saved on this device</p>
+        </div>
+      </div>
+      <div class="actions">
+        <button class="btn ghost" id="exportBtn" title="Download your data">Export</button>
+        <button class="btn ghost" id="importBtn" title="Restore from a file">Import</button>
+        <button class="btn ghost danger" id="resetBtn" title="Clear all data and start at K 0.00">Reset</button>
+      </div>
+      <input type="file" id="importFile" accept=".json" hidden />
+    </header>
+
+    <!-- Balance hero -->
+    <section class="hero card">
+      <div class="hero-left">
+        <div class="card-label">Available balance</div>
+        <div class="balance" id="balance">K 0.00</div>
+        <button class="link-btn" id="editStart">Set starting balance</button>
+      </div>
+      <div class="hero-right">
+        <div class="mini">
+          <span class="mini-label in">Money in</span>
+          <span class="mini-val" id="moneyInMonth">K 0.00</span>
+        </div>
+        <div class="mini">
+          <span class="mini-label out">Money out</span>
+          <span class="mini-val" id="moneyOutMonth">K 0.00</span>
+        </div>
+        <div class="mini">
+          <span class="mini-label net">Net this month</span>
+          <span class="mini-val" id="netMonth">K 0.00</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Add transaction -->
+    <section class="card add-card" id="addCard">
+      <div class="card-head">
+        <h2 id="formTitle">Add money out</h2>
+        <span class="card-badge out" id="formBadge">Debit</span>
+      </div>
+
+      <div class="type-toggle" role="tablist" aria-label="Transaction type">
+        <button type="button" class="type-btn in" data-type="in">
+          <span class="t-ico">&#9650;</span> Money In
+        </button>
+        <button type="button" class="type-btn out active" data-type="out">
+          <span class="t-ico">&#9660;</span> Money Out
+        </button>
+      </div>
+
+      <form id="txForm" class="form-grid out">
+        <div class="field">
+          <label for="date">Date</label>
+          <input type="date" id="date" required />
+        </div>
+        <div class="field">
+          <label for="desc">Description</label>
+          <input type="text" id="desc" placeholder="e.g. Groceries" required />
+        </div>
+        <div class="field">
+          <label for="category">Category</label>
+          <select id="category" required></select>
+        </div>
+        <div class="field">
+          <label for="amount" id="amountLabel">Amount spent (K)</label>
+          <input type="number" id="amount" step="0.01" min="0.01" placeholder="0.00" required />
+        </div>
+        <div class="field submit-field">
+          <button type="submit" class="btn primary full" id="submitBtn">Add money out</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- Summary + category breakdown -->
+    <section class="split">
+      <div class="card">
+        <h2>Spending by category <span class="muted">(this month)</span></h2>
+        <div id="categoryBars" class="bars"></div>
+        <p class="empty-msg" id="catEmpty">No spending yet this month.</p>
+      </div>
+      <div class="card">
+        <h2>History</h2>
+        <div class="legend">
+          <span><i class="dot in-dot"></i> Money in</span>
+          <span><i class="dot out-dot"></i> Money out</span>
+        </div>
+        <div id="list" class="tx-list"></div>
+        <p class="empty-msg" id="listEmpty">No transactions yet.</p>
+      </div>
+    </section>
+
+    <footer>
+      <p>Your data stays in this browser (localStorage). Use <em>Export</em> to back it up.</p>
+      <p class="credit">© 2026 Mwangazi Tech Solutions · mwangazitechsolutions@gmail.com</p>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
